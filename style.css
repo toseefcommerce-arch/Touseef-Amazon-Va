@@ -1,0 +1,140 @@
+:root{--navy:#131921;--navy2:#232f3e;--accent:#ff9900;--accent2:#febd69;--ease:cubic-bezier(.22,.8,.3,1)}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--navy2);background:#fff}
+section[id]{scroll-margin-top:64px}
+
+/* ---------- NAVBAR ---------- */
+.navbar{background:var(--navy);transition:box-shadow .3s}
+.navbar.scrolled{box-shadow:0 4px 18px rgba(0,0,0,.35)}
+.navbar .nav-link{position:relative;font-weight:500}
+.navbar .nav-link::after{content:"";position:absolute;left:.5rem;right:.5rem;bottom:2px;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .3s var(--ease)}
+.navbar .nav-link:hover::after{transform:scaleX(1)}
+
+/* ---------- BUTTONS ---------- */
+.btn{border-radius:12px}
+.btn-acc{background:var(--accent);color:#000;font-weight:700;transition:transform .25s var(--ease),background .25s,box-shadow .25s}
+.btn-acc:hover{background:#e68a00;color:#000;transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,153,0,.35)}
+.btn-acc:active{transform:translateY(0)}
+.pulse{position:relative}
+.pulse::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--accent);animation:ring 2.4s ease-out infinite;pointer-events:none}
+@keyframes ring{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.35);opacity:0}}
+
+/* ---------- HERO (Amazon-style dark navy + orange glow + dotted grid) ---------- */
+.hero{position:relative;overflow:hidden;color:#fff;padding:100px 0 150px;
+  background:radial-gradient(circle at 85% 15%,rgba(255,153,0,.16),transparent 45%),radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px) 0 0/26px 26px,linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%)}
+.hero .container{position:relative;z-index:1}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;pointer-events:none}
+.hero::before{width:380px;height:380px;background:var(--accent);top:-140px;right:-80px;animation:drift 14s ease-in-out infinite alternate}
+.hero::after{width:300px;height:300px;background:#146eb4;bottom:-140px;left:-60px;animation:drift 18s ease-in-out infinite alternate-reverse}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(-50px,40px) scale(1.15)}}
+.hero h1{font-weight:800;letter-spacing:-.02em}
+.hero h1 span,.title span{color:var(--accent)}
+.hero .intro{opacity:0;animation:rise .9s var(--ease) forwards;animation-delay:calc(var(--d) * 140ms + 100ms)}
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+/* floating Amazon-seller icons (boxes, cart, tags, truck...) */
+.deco{position:absolute;font-size:var(--s,60px);color:#fff;opacity:.06;pointer-events:none;transform:rotate(var(--r,0deg));animation:bobr 10s ease-in-out infinite;animation-delay:var(--dl,0s)}
+.deco.o{color:var(--accent);opacity:.1}
+@keyframes bobr{50%{transform:translateY(-18px) rotate(calc(var(--r,0deg) + 8deg))}}
+
+/* smile-style arrow drawn under the job title */
+.smile{display:block;margin:-6px 0 22px}
+.smile path{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .9s ease 1s forwards}
+.smile path+path{animation-delay:1.7s;animation-duration:.4s}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* ---------- PROFILE PHOTO ---------- */
+.profile{position:relative;width:100%;max-width:340px;margin-inline:auto;perspective:900px}
+.profile .float{position:relative;animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.profile .orb{position:absolute;left:50%;top:50%;width:118%;aspect-ratio:1;border:1px dashed rgba(255,153,0,.5);border-radius:50%;transform:translate(-50%,-50%);animation:spin 45s linear infinite;pointer-events:none}
+.profile .orb::after{content:"";position:absolute;top:-5px;left:50%;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px 2px rgba(255,153,0,.7)}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.profile .photo{position:relative;z-index:1;border-radius:22px;transition:transform .25s ease-out;will-change:transform}
+.profile .photo::before{content:"";position:absolute;inset:18px -18px -18px 18px;border:3px solid var(--accent);border-radius:22px;z-index:-1;animation:frameIn .9s var(--ease) 1s both}
+@keyframes frameIn{from{opacity:0;transform:translate(-18px,-18px)}to{opacity:1;transform:none}}
+.profile .photo-clip{position:relative;overflow:hidden;border-radius:22px;box-shadow:0 24px 50px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.1)}
+.profile img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top center;animation:unveil 1.2s var(--ease) .45s both;transition:transform .8s var(--ease)}
+.profile:hover img{transform:scale(1.04)}
+@keyframes unveil{from{clip-path:inset(100% 0 0 0);transform:scale(1.15)}to{clip-path:inset(0);transform:scale(1)}}
+.profile .shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(-120%);animation:sweep 1.4s ease-in-out 1.9s 1 forwards;pointer-events:none}
+.profile:hover .shine{animation:sweep 1.1s ease-in-out 1}
+@keyframes sweep{to{transform:translateX(120%)}}
+.profile .badge-card{position:absolute;z-index:2;left:-26px;bottom:26px;display:flex;align-items:center;gap:12px;padding:12px 16px;color:#fff;background:rgba(15,28,46,.88);border:1px solid rgba(255,255,255,.14);border-radius:14px;box-shadow:0 12px 30px rgba(0,0,0,.4);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:badgeIn .8s var(--ease) 1.6s both,bob 5s ease-in-out 2.4s infinite}
+.profile .badge-card .ico2{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--accent);color:#000;font-weight:700}
+.profile .badge-card small{display:block;font-size:.7rem;color:#9fb0c6;line-height:1.2}
+.profile .badge-card strong{font-size:.9rem;line-height:1.2}
+@keyframes badgeIn{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media(max-width:575.98px){.profile{max-width:280px}.profile .badge-card{left:-8px}}
+
+/* ---------- STATS BAR (overlaps hero) ---------- */
+.stats{margin-top:-64px;position:relative;z-index:3}
+.stat{padding:22px 12px;text-align:center}
+.stat b{display:block;font-size:2.1rem;line-height:1;color:var(--accent);font-weight:800}
+.stat span{font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;color:#6b7685;font-weight:600}
+
+/* ---------- SECTIONS ---------- */
+.sec{position:relative;overflow:hidden;padding:96px 0}
+.sec>.container{position:relative;z-index:1}
+.bg-soft{background:radial-gradient(#d9dee5 1px,transparent 1px) 0 0/22px 22px,#f4f6f9}
+.dark{background:radial-gradient(circle at 10% 0,rgba(255,153,0,.14),transparent 40%),linear-gradient(135deg,var(--navy),var(--navy2));color:#fff}
+.eyebrow{display:block;color:#e68a00;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.dark .eyebrow{color:var(--accent2)}
+.title{position:relative;display:inline-block;font-weight:800;letter-spacing:-.01em;font-size:clamp(1.7rem,3vw,2.3rem)}
+.title::after{content:"";position:absolute;left:0;bottom:-8px;height:4px;width:100%;border-radius:4px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .8s var(--ease) .2s}
+.js .title.in::after,.no-js .title::after{transform:scaleX(1)}
+
+/* ---------- CARDS ---------- */
+.card{border:0;border-radius:16px;box-shadow:0 2px 14px rgba(19,25,33,.08);height:100%;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.card:hover{transform:translateY(-6px);box-shadow:0 16px 32px rgba(19,25,33,.16)}
+.ico{display:grid;place-items:center;flex:none;width:54px;height:54px;border-radius:14px;background:rgba(255,153,0,.13);color:#e68a00;font-size:1.5rem;transition:background .3s,color .3s,transform .3s var(--ease)}
+.card:hover .ico{background:var(--accent);color:var(--navy);transform:rotate(-6deg) scale(1.06)}
+.num{color:var(--accent);font-weight:800;font-size:.85rem;letter-spacing:.08em}
+
+/* process: dashed "shipping route" connecting the steps */
+.steps{position:relative}
+@media(min-width:992px){.steps::before{content:"";position:absolute;top:34px;left:10%;right:10%;border-top:2px dashed #ffb84d}}
+.step{display:flex;flex-direction:column;height:100%}
+.step .card{height:auto;flex:1}
+.dot{position:relative;z-index:1;display:grid;place-items:center;width:68px;height:68px;margin:0 auto 16px;border-radius:50%;background:var(--navy);color:var(--accent);font-size:1.6rem;border:4px solid #f4f6f9;box-shadow:0 0 0 2px var(--accent);transition:background .3s,color .3s,transform .3s var(--ease)}
+.step:hover .dot{background:var(--accent);color:var(--navy);transform:scale(1.08)}
+
+/* why-work-with-me chips */
+.chip{display:flex;align-items:center;gap:12px;height:100%;padding:18px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);transition:background .3s,border-color .3s,transform .3s var(--ease)}
+.chip:hover{background:rgba(255,153,0,.12);border-color:rgba(255,153,0,.5);transform:translateY(-4px)}
+.chip i{display:inline-block;color:var(--accent);font-size:1.3rem;transition:transform .3s var(--ease)}
+.chip:hover i{transform:scale(1.25) rotate(-8deg)}
+
+/* packages */
+.pack{position:relative;padding:38px 28px;text-align:center}
+.pack .ico{width:64px;height:64px;margin:0 auto 18px;font-size:1.8rem}
+.pack h3{font-weight:800;letter-spacing:.06em}
+.pack.pro{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;outline:2px solid var(--accent)}
+.pack.pro .ico{background:var(--accent);color:var(--navy)}
+.ribbon{position:absolute;top:14px;right:14px;background:var(--accent);color:#000;font-size:.66rem;font-weight:800;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em}
+
+/* timeline */
+.tl{position:relative;overflow:hidden;padding:24px 12px;text-align:center}
+.tl .big{position:absolute;right:8px;top:-6px;font-size:3.4rem;font-weight:800;line-height:1;color:rgba(255,153,0,.14)}
+.tl i{display:block;margin-bottom:8px;color:var(--accent);font-size:1.7rem}
+
+/* floating WhatsApp button */
+.fab{position:fixed;right:20px;bottom:20px;z-index:1050;display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:#25d366;color:#fff;font-size:1.9rem;box-shadow:0 8px 22px rgba(0,0,0,.3);transition:transform .25s var(--ease)}
+.fab:hover{transform:scale(1.1);color:#fff}
+.fab::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25d366;animation:ring 2.4s ease-out infinite}
+
+footer{background:#0b1017;color:#9aa5b1}
+.alert{animation:rise .5s var(--ease) both}
+
+/* ---------- SCROLL REVEAL (only when JS runs) ---------- */
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:calc(var(--i,0) * 70ms)}
+.js .reveal.in{opacity:1;transform:none}
+.js .reveal.in.done{transition-delay:0s}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .hero .intro,.js .reveal{opacity:1;transform:none}
+  .title::after{transform:scaleX(1)}
+  .smile path{stroke-dashoffset:0!important}
+}
